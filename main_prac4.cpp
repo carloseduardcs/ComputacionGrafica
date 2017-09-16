@@ -15,6 +15,8 @@ float transY = 0.0f;
 float transZ = -5.0f;
 int screenW = 0.0;
 int screenH = 0.0;
+float angHombro, angcodo, angMano = 0;
+float movDedo1 = 0.0, movDedo2 = 0.0, movDedo3 = 0.0, movDedo4, movDedo5, movDedo6, movDedo7, movDedo8, movDedo9, movDedo10 = 0.0;
 
  
 void InitGL ( void )     // Inicializamos parametros
@@ -198,7 +200,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		glPopMatrix();
 		*/
 	/*0,0,0*/
-	/*
+	
 	glPushMatrix();//cabeza
 	glColor3f(1.0, 0.0, 0.0);
 	prisma();
@@ -216,7 +218,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glScalef(3.0, 3.0, 1.0);
 	glColor3f(0.0, 0.0, 1.0);
 	prisma();/*0,-2.5,0*/
-/*
+
 	glPopMatrix();
 
 	glPushMatrix();//brazo D
@@ -232,7 +234,152 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glColor3f(1.0, 1.0, 0.0);
 	prisma();
 	glPopMatrix();
+	glPushMatrix();
+	//brazo
+	glRotatef(90.0, 0.0, 0.0, 1.0);
+	glTranslatef(-1.25, -1.75, 0.0);
+	glRotatef(angHombro, 0.0, 0.0, 1.0);
+	glPushMatrix();//hombro
+	glColor3f(0.0, 1.0, 0.0);
+	glScalef(0.5, 0.5, 1.0);
+	prisma();
+	glPopMatrix();
 
+	glTranslatef(0.0, -0.75, 0.0);
+	glPushMatrix();//bicep
+	glColor3f(1.0, 0.0, 0.0);
+	glScalef(0.5, 1.0, 1.0);
+	prisma();
+	glPopMatrix();
+
+	glTranslatef(0.0, -0.75, 0.0);
+	glRotatef(angcodo, 0.0, 0.0, 1.0);
+	glPushMatrix();	//codo
+	glColor3f(0.0, 0.0, 1.0);
+	glScalef(0.5, 0.5, 1.0);
+	prisma();
+	glPopMatrix();
+
+	glTranslatef(0.0, -0.75, 0.0);
+	glPushMatrix();//ante brazo
+	glColor3f(1.0, 1.0, 0.0);
+	glScalef(0.5, 1.0, 1.0);
+	prisma();
+	glPopMatrix();
+
+	glTranslatef(0.0, -0.75, 0.0);
+	glRotatef(angMano, 0.0, 0.0, 1.0);
+	glPushMatrix();//mano
+	glColor3f(0.0, 1.0, 1.0);
+	glScalef(0.5, 0.5, 1.0);
+	prisma();
+	glPopMatrix();
+
+	glPushMatrix();//dedo1
+	glTranslatef(0.25, 0.0, 0.0);
+	glRotatef(movDedo1, 0.0, 0.0, 1.0);
+	glTranslatef(0.1, 0.0, 0.0);
+	glColor3f(0.3, 0.5, 0.0);
+	glPushMatrix();
+	glScalef(0.2, 0.1, 1.0);
+	prisma();//parte1
+	glPopMatrix();
+
+	glTranslatef(0.1, 0.0, 0.0);
+	glRotatef(movDedo2, 0.0, 0.0, 1.0);
+	glTranslatef(0.1, 0.0, 0.0);
+	glColor3f(0.3, 0.6, 0.0);
+	glPushMatrix();
+	glScalef(0.2, 0.1, 1.0);
+	prisma();//parte2
+	glPopMatrix();
+	glPopMatrix();
+	/**************************************************************************/
+	glPushMatrix();//dedo2
+	glTranslatef(-0.2, -0.3, 0.4);
+	glRotatef(movDedo3, 0.0, 0.0, 1.0);
+	glTranslatef(-0.02, -0.1, 0.0);
+	glColor3f(0.3, 0.5, 0.0);
+	glPushMatrix();
+	glScalef(0.1, 0.3, 0.1);
+	prisma();//parte1
+	glPopMatrix();
+
+	glTranslatef(-0.1, -0.0, 0.0);
+	glRotatef(movDedo4, 0.0, 0.0, 1.0);
+	glTranslatef(0.1, -0.3, 0.0);
+	glColor3f(0.3, 0.6, 0.0);
+	glPushMatrix();
+	glScalef(0.1, 0.3, 0.1);
+	prisma();//parte2
+	glPopMatrix();
+	glPopMatrix();
+	/****************************************************************/
+
+	glPushMatrix();//dedo2
+	glTranslatef(-0.2, -0.3, -0.2);
+	glRotatef(movDedo5, 0.0, 0.0, 1.0);
+	glTranslatef(-0.02, -0.1, 0.0);
+	glColor3f(0.3, 0.5, 0.0);
+	glPushMatrix();
+	glScalef(0.1, 0.3, 0.1);
+	prisma();//parte1
+	glPopMatrix();
+
+	glTranslatef(-0.1, -0.0, 0.0);
+	glRotatef(movDedo6, 0.0, 0.0, 1.0);
+	glTranslatef(0.1, -0.3, 0.0);
+	glColor3f(0.3, 0.6, 0.0);
+	glPushMatrix();
+	glScalef(0.1, 0.3, 0.1);
+	prisma();//parte2
+	glPopMatrix();
+	glPopMatrix();
+	/****************************************************************/
+	glPushMatrix();//dedo2
+	glTranslatef(-0.2, -0.3, 0.0);
+	glRotatef(movDedo7, 0.0, 0.0, 1.0);
+	glTranslatef(-0.02, -0.1, 0.0);
+	glColor3f(0.3, 0.5, 0.0);
+	glPushMatrix();
+	glScalef(0.1, 0.3, 0.1);
+	prisma();//parte1
+	glPopMatrix();
+
+	glTranslatef(-0.1, -0.0, 0.0);
+	glRotatef(movDedo8, 0.0, 0.0, 1.0);
+	glTranslatef(0.1, -0.3, 0.0);
+	glColor3f(0.3, 0.6, 0.0);
+	glPushMatrix();
+	glScalef(0.1, 0.3, 0.1);
+	prisma();//parte2
+	glPopMatrix();
+	glPopMatrix();
+	/****************************************************************/
+	glPushMatrix();//dedo2
+	glTranslatef(-0.2, -0.3, 0.2);
+	glRotatef(movDedo9, 0.0, 0.0, 1.0);
+	glTranslatef(-0.02, -0.1, 0.0);
+	glColor3f(0.3, 0.5, 0.0);
+	glPushMatrix();
+	glScalef(0.1, 0.3, 0.1);
+	prisma();//parte1
+	glPopMatrix();
+
+	glTranslatef(-0.1, -0.0, 0.0);
+	glRotatef(movDedo10, 0.0, 0.0, 1.0);
+	glTranslatef(0.1, -0.3, 0.0);
+	glColor3f(0.3, 0.6, 0.0);
+	glPushMatrix();
+	glScalef(0.1, 0.3, 0.1);
+	prisma();//parte2
+	glPopMatrix();
+	glPopMatrix();
+	/****************************************************************/
+
+	glPopMatrix();
+	glPopMatrix();
+	/*
 	glPushMatrix();//brazoI
 	glTranslatef(3.0, -1.5, 0.0);
 	glScalef(3.0, 1.0, 1.0);
@@ -246,7 +393,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glColor3f(0.5, 0.2, 0.0);
 	prisma();
 	glPopMatrix();
-
+	*/
 	glPushMatrix();//piernaD
 	glTranslatef(-0.75, -7.5, 0.0);
 	glScalef(1.0, 7.0, 1.0);
@@ -274,7 +421,8 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glColor3f(1.0, 0.4, 0.8);
 	prisma();
 	glPopMatrix();
-	*/
+	
+	/*
 	glPushMatrix();
 	glScalef(3.0, 2.0, 2.0);
 	glColor3f(0.2, 0.2, 0.2);
@@ -371,7 +519,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glColor3f(1.0, 0.5, 0.75);
 	prisma();
 	glPopMatrix();
-
+	*/
 	/*glPushMatrix();
 	glPopMatrix();*/
   glutSwapBuffers ( );
@@ -419,8 +567,8 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 	case 'D':
 		transX += 0.2f;
 		break;
-	case 'y':
-	case 'Y':
+	case 'z':
+	case 'Z':
 		transY += 0.2f;
 		break;
 	case 'h':
@@ -428,6 +576,111 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 		transY -= 0.2f;
 		break;
 		break;
+	case 'g':
+		if (angcodo>-5.0)
+		angcodo -= 0.5f;
+		break;
+	case 'G':
+		if (angcodo<135.0)
+		angcodo += 0.5f;
+		break;
+	case 'f':
+		if (angHombro>-85.0)
+			angHombro -= 0.5f;
+		break;
+	case 'F':
+		if (angHombro<55.0)
+			angHombro += 0.5f;
+		break;
+	case 'r':
+		if (angMano>-5.0)
+			angMano -= 0.5f;
+		break;
+	case 'R':
+		if (angMano<45.0)
+			angMano += 0.5f;
+		break;
+	case 't':
+		if (movDedo1>-65.0)
+			movDedo1 -= 0.5f;
+		break;
+	case 'T':
+		if (movDedo1<5.0)
+			movDedo1 += 0.5f;
+		break;
+	case 'y':
+		if (movDedo2>-65.0)
+			movDedo2 -= 0.5f;
+		break;
+	case 'Y':
+		if (movDedo2<5.0)
+			movDedo2 += 0.5f;
+		break;
+	case 'u':
+		if (movDedo3>-5.0)
+			movDedo3 -= 0.5f;
+		break;
+	case 'U':
+		if (movDedo3<65.0)
+			movDedo3 += 0.5f;
+		break;
+	case 'i':
+		if (movDedo4>-5.0)
+			movDedo4 -= 0.5f;
+		break;
+	case 'I':
+		if (movDedo4<15.0)
+			movDedo4 += 0.5f;
+		break;
+	case 'o':
+		if (movDedo5>-5.0)
+			movDedo5 -= 0.5f;
+		break;
+	case 'O':
+		if (movDedo5<65.0)
+			movDedo5 += 0.5f;
+		break;
+	case 'p':
+		if (movDedo6>-5.0)
+			movDedo6 -= 0.5f;
+		break;
+	case 'P':
+		if (movDedo6<15.0)
+			movDedo6 += 0.5f;
+		break;
+	case 'j':
+		if (movDedo7>-5.0)
+			movDedo7 -= 0.5f;
+		break;
+	case 'J':
+		if (movDedo7<65.0)
+			movDedo7 += 0.5f;
+		break;
+	case 'k':
+		if (movDedo8>-5.0)
+			movDedo8 -= 0.5f;
+		break;
+	case 'K':
+		if (movDedo8<15.0)
+			movDedo8 += 0.5f;
+		break;
+	case 'l':
+		if (movDedo9>-5.0)
+			movDedo9 -= 0.5f;
+		break;
+	case 'L':
+		if (movDedo9<65.0)
+			movDedo9 += 0.5f;
+		break;
+	case 'ñ':
+		if (movDedo10>-5.0)
+			movDedo10 -= 0.5f;
+		break;
+	case 'Ñ':
+		if (movDedo10<15.0)
+			movDedo10 += 0.5f;
+		break;
+
 	case 27:        // Cuando Esc es presionado...
 		exit(0);   // Salimos del programa
 		break;
