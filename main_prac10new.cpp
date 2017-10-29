@@ -1,9 +1,10 @@
-//Semestre 2017 - 2
+//Semestre 2018 - 1
 //************************************************************//
 //************************************************************//
-//************** Alumno (s):Salgado Salazar Carlos Eduardo *********************************//
-//*************							grupo:05				******//
-//*************											******//
+//************** Alumno (s): Salgado Salazar Carlos Eduardo***//
+//************************************************************//
+//*************	Grupo: 01	**********************************//
+//************************************************************//
 //************************************************************//
 //************************************************************//
 
@@ -13,17 +14,12 @@
 
 #include "cmodel/CModel.h"
 
-//Solo para Visual Studio 2015
+//Solo para Visual //Studio 2015//2017
 #if (_MSC_VER == 1900)
-#   pragma comment( lib, "legacy_stdio_definitions.lib" )
+#   pragma comment( lib, "legacy_stdio_definitions.lib" ) //vinculadro entrada legacy_stdio_definitions.lib
 #endif
-bool check = false;
-bool check1 = false;
-bool check2 = false;
-bool check3 = false;
-bool check4 = false;
-bool check5 = true;
-CCamera objCamera; 
+
+CCamera objCamera;
 GLfloat g_lookupdown = 0.0f;    // Look Position In The Z-Axis (NEW) 
 
 int font=(int)GLUT_BITMAP_HELVETICA_18;
@@ -53,17 +49,27 @@ CFiguras fig5;	//Casa01
 CFiguras fig6;
 
 CFiguras fig7; //Para el monito
+
 //Figuras de 3D Studio
 CModel kit;
 CModel llanta;
-
+CModel ARC170;
 //Animación del coche
 float movKit = 0.0;
-float mov = 0.0;
-bool g_fanimacion = false;
 float giro = 0.0f;
-float girollanta = 0.0f;
-float girollanta1 = 0.0f;
+float girolateral = 0.0f;
+bool g_fanimacion = false;
+bool g_estado = false;
+bool movnave = false;
+bool movnave2 = false;
+bool izquierda = false;
+bool derecha = false;
+bool sube = false;
+bool baja = false;
+
+float kitY = 4;
+
+			
 void InitGL ( GLvoid )     // Inicializamos parametros
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);				// Negro de fondo	
@@ -114,7 +120,7 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	text6.ReleaseImage();
 
 	//Carga de Figuras
-	kit._3dsLoad("kitt.3ds");	
+	kit._3dsLoad("ARC170.3DS");
 	//kit.VertexNormals();
 	
 	llanta._3dsLoad("k_rueda.3ds");
@@ -164,38 +170,44 @@ void display ( void )   // Creamos la funcion donde se dibuja
 			glPushMatrix();
 				//Para que el coche conserve sus colores
 				glDisable(GL_COLOR_MATERIAL);
-				glRotatef(90, 0, 1, 0);
-				glScalef(0.3, 0.3, 0.3);
-
-				glTranslatef(0, 4+mov, movKit);
+				glTranslatef(movKit, 2.0, 0.0);
+				glRotatef(-90, 0.0, 1, 0.0);   //se le dio un giro ya que originalmente tapaba la carretera
+				glRotatef(-giro, 0.0, 1.0, 0.0); //funcion que mueve el vehiculo    (movkit variable que controla el mov del carro  >>z   ^y   +x)
 				//Pongo aquí la carroceria del carro
-				kit.GLrender(NULL,_SHADED,1.0);  //_WIRED O _POINTS
-		
-				//llanta.GLrender(NULL,_SHADED,1.0);
-		/*llantas*/
+				glScalef(0.005, 0.005, 0.005);  //se escala
+				kit.GLrender(NULL,_SHADED,1.0);  // _SHADED  _WIRED O _POINTS ///dibujar en el modo solido  //carroseria
+				
 				glPushMatrix();
-				glTranslatef(-6.0, -1.0, 7.5);
-				glRotatef(giro, 1.0, 0.0, girollanta);
-				llanta.GLrender(NULL, _SHADED, 1.0);
+					glTranslatef(-6, -1, 7.5);
+					glRotatef(girolateral, 0, 0, 1);
+					glRotatef(giro, 1, 0, 0);
+					llanta.GLrender(NULL,_SHADED,1.0); //llanta delantera derecha
 				glPopMatrix();
+
 				glPushMatrix();
-				glTranslatef(6.0, -1.0, 7.5);
-				glRotatef(180.0, 0.0, 1.0, 0.0);
-				glRotatef(-giro, 1.0, 0.0, -girollanta);
-				llanta.GLrender(NULL, _SHADED, 1.0);
+					glTranslatef(6, -1, 7.5);
+					glRotatef(-girolateral, 0, 0, 1);
+					glRotatef(giro, 1, 0, 0);
+					glRotatef(180,0,1,0);
+					llanta.GLrender(NULL, _SHADED, 1.0); //llanta delantera izquierda
 				glPopMatrix();
+
 				glPushMatrix();
-				glTranslatef(-6.0, -1.0, -9.5);
-				glRotatef(giro, 1.0, 0.0, girollanta);
-				llanta.GLrender(NULL, _SHADED, 1.0);
+					glTranslatef(-6, -1, -9.5);
+					//glRotatef(girolateral, 0, 0, 1);
+					glRotatef(girolateral, 0, 0, 1);
+					glRotatef(giro, 1, 0, 0);
+					llanta.GLrender(NULL, _SHADED, 1.0); //llanta trasera derecha
 				glPopMatrix();
+
 				glPushMatrix();
-				glTranslatef(6.0, -1.0, -9.5);
-				glRotatef(180.0, 0.0, 1.0, 0.0);
-				glRotatef(-giro, 1.0, 0.0, -girollanta);
-				llanta.GLrender(NULL, _SHADED, 1.0);
+					glTranslatef(6, -1, -9.5);
+					glRotatef(-girolateral, 0, 0, 1);
+					glRotatef(giro, 1, 0, 0);
+					glRotatef(180, 0, 1, 0);
+					llanta.GLrender(NULL, _SHADED, 1.0); //llanta trasera izq
 				glPopMatrix();
-				/***************************************/
+
 			glPopMatrix();
 
 			//Para que el comando glColor funcione con iluminacion
@@ -268,7 +280,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glDisable(GL_LIGHTING);
 		glColor3f(1.0,0.0,0.0);
 		pintaTexto(-12,12.0,-14.0,(void *)font,"Practica 10");
-		pintaTexto(-12,10.5,-14,(void *)font,"Poner algo en Movimiento");
 		glColor3f(1.0,1.0,1.0);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_TEXTURE_2D);
@@ -278,101 +289,154 @@ void display ( void )   // Creamos la funcion donde se dibuja
 }
 
 void animacion()
-
 {
-	
-	fig3.text_izq-= 0.001;
-	fig3.text_der-= 0.001;
-	if (fig3.text_izq < -1) {
+	fig3.text_izq -= 0.001;
+	fig3.text_der -= 0.001;
+	if (fig3.text_izq < -1)
 		fig3.text_izq = 0;
-	}
-	if (fig3.text_der < 0) {
+	if (fig3.text_der < 0)
 		fig3.text_der = 1;
-	}
-
-
-	if (g_fanimacion) { // inicio de animacion de retoceso a -45
-		if (movKit <= -45) {
-			g_fanimacion = false;
-			check = true;
-			check5 = false;
-		}
-		else {
-			movKit -= 0.1; // movimiento de coche
-			giro -= 0.6; // giro normal de llanta
-		}
-	}
-	
-	if (check) // realisa giro de 90 grados en Z
+/*
+	if (izquierda)                // el carro va hacia atras de 0 hasta -45 en X
 	{
-		if (girollanta >= 5)
-		{
-			check1 = true;
-			check5 = false;
+		if (movKit >= -45)   
+		{                    
+			movKit -= 0.1;
+			giro -= 1.0;
 		}
 		else
 		{
-			girollanta += 0.01; //giro de llanta 90 grados en el eje Z 
+			izquierda = false;
+			sube = true;
+		}
+	}
+/*	
+	if (sube) // eleva el carro de 4 hasta 45 en el eje Y
+	{
+		if (kitY >= 45)
+		{
+			sube = false;
+			derecha = true;
+		}
+		else {
+			kitY += 0.1;
+			giro += 1;
+			if (girolateral <= 90) 
+				girolateral += 0.3;
+		}
+	}
+*/	
+	if (derecha) {     
+		if (movKit >= 40) {
+		//	giro += 1.0;
+			derecha = false;
+			movnave = true;
+		}
+		else
+		{
+			movKit += 0.5;
+		}
+	}
 
-		}
-	
+	if (movnave) {    // desplaza el carro desde -45 hasta 50 
 		
+		if (giro >= 180) {
+			derecha = false;
+			movnave = false;
+			izquierda = true;
+		}
+		else
+		{
+			giro += 1.0;
+		}
 	}
-	if (check1)// elevacion 20
+
+
+
+	if (izquierda)                // el carro va hacia atras de 0 hasta -45 en X
 	{
-		if (mov >= 20) {
-			check2 = true;
-			check5 = false;
-		}
-		else {
-			mov += 0.1;  // velocidad con la que se eleva el auto
-		}
-	}
-	if (check2)// llegada a 50
-	{
-		if (movKit >= 50) {
-			check3 = true;
-			check = false;
-			check1 = false;
-			check2 = false;
-			check5 = false;
-		}
-		else {
-			movKit += 0.1; // velocidad con la que se desplasa en el aire
+		if (movKit <= -40)
+		{
+			izquierda = false;
+			derecha = false;
+			movnave2 = true;
+		//	giro -= 1.0;
 			
 		}
+		else
+		{
+			movKit -= 0.5;
+			derecha = false;
+		}
 	}
-	if (check3)// decenso y rotacion de llantas a estado original 
-	{
-		if (mov <= 0 && girollanta <= 0) {
-			g_fanimacion = false;
-			check3 = false;
-			check4 = true;
-			check5 = false;
+	if (movnave2) {    // desplaza el carro desde -45 hasta 50 
+
+		if (giro <= 0) {
+			derecha = true;
+			movnave2 = false;
+			izquierda = false;
+		}
+		else
+		{
+			giro -= 1.0;
+		}
+	}
+
+
+
+/*
+	if (baja){      // disminuye el eje Y de 45 a 4
+		if (kitY <= 4){
+			baja = false;
+			derecha = true;
 		}
 		else {
-			mov -= 0.1; //velocidad de desenso
-			girollanta -= 0.025;// velocidad con la que las llantas vuelven a su estasdo original 
+			kitY -= 0.1;
+			giro += 1;
+			if (girolateral >= 0)
+				girolateral -= 0.3;
 		}
 	}
-	if (check4)// movimiento en tierra hasta 100
-	{
-		if (movKit>=100) {
-			g_fanimacion = false;
-			check = false;
-			check1 = false;
-			check2 = false;
-			check3 = false;
-			check5 = false; // evita interrupciones de tecla espacio
+	
+	if(derecha){       // desplaza de 50 a 100  el carro en el eje X y se para al llegar al 100
+		if(movKit >= 100){
+			derecha = false;
 		}
 		else {
-			movKit += 0.1;
-			giro += 0.5;
+		movKit += 0.1;
+		giro += 1.0;
 		}
 	}
+
+/* 
+   //animacion de la clase anterior
+	
+	if(g_fanimacion)// pregunta por bandera 2 estados falso y verdadero, al principio esta en falso, tecla espacio la vuelve verdadero 
+	{
+		if (movKit >= 85.0) {
+			g_estado = true;
+			g_fanimacion = false;
+		}
+		else{
+			movKit += 0.3;   //controla sentido y velocidad
+			giro += 1.5;
+		}
+	}
+
+	if (g_estado)// 
+	{
+		if (movKit <= 0.0) {
+			g_estado = false;
+			g_fanimacion = true;
+		}
+		else {
+			movKit -= 0.3;   //controla sentido y velocidad
+			giro -= 1.5;
+		}
+	}*/
+	
 	glutPostRedisplay();
 }
-
 
 void reshape ( int width , int height )   // Creamos funcion Reshape
 {
@@ -418,13 +482,28 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 			break;
 
 		case ' ':		//Poner algo en movimiento
-			if (check5)// evita interrupciones de tecla spacae
+			/*
+			if (movKit >= 100)
 			{
-				g_fanimacion ^= true; //Activamos/desactivamos la animacíon
+				movKit = 0.0;
+				derecha = true;
 			}
-			
+			*/
+			derecha = true;
+			/*
+			//Activamos/desactivamos la animacíon
+			g_fanimacion ^=true; //Activamos/desactivamos la animacíon
+			*/
 			break;
-
+		case 'r':
+		case 'R':
+			giro = 0.0;
+			movKit = 0.0;
+			movnave = false;
+				movnave2 = false;
+			derecha = false;
+			izquierda = false;
+			break;
 		case 27:        // Cuando Esc es presionado...
 			exit ( 0 );   // Salimos del programa
 			break;        
